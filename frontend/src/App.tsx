@@ -18,6 +18,7 @@ export default function App() {
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
+  const statusRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     loadCustomers();
@@ -65,9 +66,12 @@ export default function App() {
         return alert('Preencha os campos corretamente');
       }
 
+      const status = statusRef.current?.checked ?? false;
+
       const response = await api.put(`/customers?id=${editingCustomer.id}`, {
         name: nameRef.current?.value,
-        email: emailRef.current?.value
+        email: emailRef.current?.value,
+        status: status
       });
 
       const updatedCustomers = customers.map( customer => {
@@ -144,6 +148,10 @@ export default function App() {
 
                   <label className="font-medium text-white">E-mail</label>
                   <input className="w-full mb-5 p-2" ref={emailRef} type="email" defaultValue={editingCustomer.email}/>
+
+                  <label className="font-medium text-white flex items-center">Ativo
+                  <input className="ml-2" type="checkbox" name="status" defaultChecked={editingCustomer?.status} ref={statusRef}></input>
+                  </label>
 
                   <input type="submit" value="Editar" className="cursor-pointer w-full p-2 bg-green-500 rounded font-medium"/>
 

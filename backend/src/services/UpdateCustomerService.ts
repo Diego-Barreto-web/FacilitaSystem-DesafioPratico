@@ -4,10 +4,11 @@ interface UpdateCustomerProps{
     id: string;
     name: string;
     email: string;
+    status: boolean;
 }
 
 class UpdateCustomerService {
-    async execute( { id, name, email}: UpdateCustomerProps) {
+    async execute( { id, name, email, status}: UpdateCustomerProps) {
         if(!id) {
             throw new Error("Solicitação inválida!");
         }
@@ -19,7 +20,7 @@ class UpdateCustomerService {
             data: {
                 name,
                 email,
-                status: true
+                status
             }
         });
 
